@@ -13,10 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
+
 builder.Services.Configure<ProductMongoDbSettings>(builder.Configuration.GetSection(nameof(ProductMongoDbSettings)));
 builder.Services.AddSingleton<IProductMongoDbSettings>(sp => sp.GetRequiredService<IOptions<ProductMongoDbSettings>>().Value);
 
-builder.Services.AddSingleton<IProductContext, ProductContext>();4
+builder.Services.AddSingleton<IProductContext, ProductContext>();
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
@@ -29,6 +31,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
 
