@@ -1,4 +1,4 @@
-﻿namespace ESourcing.Products.Configuration
+﻿namespace ESourcing.Products.Configuration.MongoDb
 {
     public interface IProductMongoDbSettings
     {

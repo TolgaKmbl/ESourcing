@@ -1,4 +1,4 @@
-﻿using ESourcing.Products.Configuration;
+﻿using ESourcing.Products.Configuration.MongoDb;
 using ESourcing.Products.Data.Contract;
 using ESourcing.Products.Entities;
 using MongoDB.Driver;

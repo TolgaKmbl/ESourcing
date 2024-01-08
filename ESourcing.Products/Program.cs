@@ -1,25 +1,30 @@
 using ESourcing.Products.Configuration;
+using ESourcing.Products.Configuration.MongoDb;
 using ESourcing.Products.Data;
 using ESourcing.Products.Data.Contract;
 using ESourcing.Products.Repositories;
 using ESourcing.Products.Repositories.Contract;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ESourcing.Products",
+        Version = "v1"
+    });
+});
 
 builder.Services.AddControllers();
-
-builder.Services.Configure<ProductMongoDbSettings>(builder.Configuration.GetSection(nameof(ProductMongoDbSettings)));
-builder.Services.AddSingleton<IProductMongoDbSettings>(sp => sp.GetRequiredService<IOptions<ProductMongoDbSettings>>().Value);
-
-builder.Services.AddSingleton<IProductContext, ProductContext>();
-builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+builder.Services.ConfigureMongoDb(builder.Configuration);
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
@@ -27,7 +32,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("../swagger/v1/swagger.json", "ESourcing.Products v1"));
 }
 
 app.UseHttpsRedirection();
