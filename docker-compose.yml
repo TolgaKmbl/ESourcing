@@ -1,11 +1,10 @@
-version: "3.5"
+version: '3.4'
 
 services:
+  esourcing.products:
+    image: ${DOCKER_REGISTRY-}esourcingproducts
+    build:
+      context: .
+      dockerfile: ESourcing.Products/Dockerfile
   mongo:
     image: mongo
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-    restart: unless-stopped
