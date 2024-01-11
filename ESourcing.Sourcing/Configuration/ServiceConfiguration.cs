@@ -1,5 +1,7 @@
 ﻿
 using ESourcing.Products.Configuration.MongoDb;
+using ESourcing.Products.Data;
+using ESourcing.Products.Data.Contract;
 using Microsoft.Extensions.Options;
 
 namespace ESourcing.Products.Configuration
@@ -11,6 +13,11 @@ namespace ESourcing.Products.Configuration
         {
             services.Configure<SourcingMongoDbSettings>(configuration.GetSection(nameof(SourcingMongoDbSettings)));
             services.AddSingleton<ISourcingMongoDbSettings>(sp => sp.GetRequiredService<IOptions<SourcingMongoDbSettings>>().Value);
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddSingleton<ISourcingContext, SourcingContext>();
         }
     }
 }
