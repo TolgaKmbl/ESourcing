@@ -15,7 +15,7 @@ namespace ESourcing.Products.Configuration
             services.AddSingleton<ISourcingMongoDbSettings>(sp => sp.GetRequiredService<IOptions<SourcingMongoDbSettings>>().Value);
         }
 
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void ConfigureContext(this IServiceCollection services)
         {
             services.AddSingleton<ISourcingContext, SourcingContext>();
         }

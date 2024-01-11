@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.ConfigureMongoDb(builder.Configuration);
-builder.Services.ConfigureServices();
+builder.Services.ConfigureContext();
 
 var app = builder.Build();
 
