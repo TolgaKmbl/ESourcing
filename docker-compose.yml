@@ -8,3 +8,10 @@ services:
       dockerfile: ESourcing.Products/Dockerfile
   mongo:
     image: mongo
+
+  esourcing.sourcing:
+    image: ${DOCKER_REGISTRY-}esourcingsourcing
+    build:
+      context: .
+      dockerfile: ESourcing.Sourcing/Dockerfile
+

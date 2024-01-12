@@ -1,5 +1,6 @@
 ﻿using ESourcing.Products.Configuration.MongoDb;
 using ESourcing.Products.Data.Contract;
+using ESourcing.Sourcing.Data;
 using ESourcing.Sourcing.Entities;
 using MongoDB.Driver;
 
@@ -17,6 +18,8 @@ namespace ESourcing.Products.Data
 
             Auctions = database.GetCollection<Auction>(nameof(Auction));
             Bids = database.GetCollection<Bid>(nameof(Bid));
+
+            SourcingContextSeed.SeedData(Auctions);
         }
 
         public IMongoCollection<Auction> Auctions { get; }
