@@ -1,7 +1,9 @@
 ﻿
+using AutoMapper;
 using ESourcing.Products.Configuration.MongoDb;
 using ESourcing.Products.Data;
 using ESourcing.Products.Data.Contract;
+using ESourcing.Sourcing.Mapping;
 using ESourcing.Sourcing.Repositories;
 using ESourcing.Sourcing.Repositories.Contract;
 using EventBusRabbitMQ;

@@ -3,6 +3,10 @@ using ESourcing.Sourcing.Repositories.Contract;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.NetworkInformation;
 using System.Net;
+using EventBusRabbitMQ.Producer;
+using EventBusRabbitMQ.Core;
+using EventBusRabbitMQ.Events;
+using AutoMapper;
 
 namespace ESourcing.Sourcing.Controllers
 {
@@ -13,15 +17,21 @@ namespace ESourcing.Sourcing.Controllers
         private readonly IAuctionRepository _auctionRepository;
         private readonly IBidRepository _bidRepository;
         private readonly ILogger<AuctionController> _logger;
+        private readonly IMapper _mapper;
+        private readonly EventBusRabbitMQProducer _eventBus;
 
         public AuctionController(
             IAuctionRepository auctionRepository,
             IBidRepository bidRepository,
-            ILogger<AuctionController> logger)
+            ILogger<AuctionController> logger,
+            EventBusRabbitMQProducer eventBus,
+            IMapper mapper)
         {
             _auctionRepository = auctionRepository;
             _bidRepository = bidRepository;
             _logger = logger;
+            _eventBus = eventBus;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -92,6 +102,9 @@ namespace ESourcing.Sourcing.Controllers
             if (bid == null)
                 return NotFound();
 
+            OrderCreateEvent eventMessage = _mapper.Map<OrderCreateEvent>(bid);
+            eventMessage.Quantity = auction.Quantity;
+
             auction.Status = (int)AuctionStatus.Closed;
             bool updateResponse = await _auctionRepository.Update(auction);
             if (!updateResponse)
@@ -100,8 +113,18 @@ namespace ESourcing.Sourcing.Controllers
                 return BadRequest();
             }
 
+            try
+            {
+                _eventBus.Publish(EventBusConstants.OrderCreateQueue, eventMessage);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "ERROR Publishing integration event: {EventId} from {AppName}", eventMessage.Id, "Sourcing");
+                throw;
+            }
+
             return Accepted();
-        }                
+        }       
 
     }
 }

@@ -1,4 +1,5 @@
 using ESourcing.Products.Configuration;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.ConfigureMongoDb(builder.Configuration);
 builder.Services.ConfigureContext();
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureRabbitMQ(builder.Configuration);
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddSwaggerGen(s =>
 {
