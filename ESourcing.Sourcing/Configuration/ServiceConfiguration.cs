@@ -45,9 +45,9 @@ namespace ESourcing.Products.Configuration
                     HostName = configuration["EventBus:HostName"]
                 };
 
-                if (!string.IsNullOrWhiteSpace(configuration["EventBus:UserName"]))
+                if (!string.IsNullOrWhiteSpace(configuration["EventBus:Username"]))
                 {
-                    factory.UserName = configuration["EventBus:UserName"];
+                    factory.UserName = configuration["EventBus:Username"];
                 }
 
                 if (!string.IsNullOrWhiteSpace(configuration["EventBus:Password"]))
