@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace EventBusRabbitMQ
 {
-    internal class RabbitMQPersistentConnection : IRabbitMQPersistentConnection
+    public class RabbitMQPersistentConnection : IRabbitMQPersistentConnection
     {
 
         private readonly IConnectionFactory _connectionFactory;

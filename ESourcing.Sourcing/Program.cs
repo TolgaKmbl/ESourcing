@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.ConfigureMongoDb(builder.Configuration);
 builder.Services.ConfigureContext();
 builder.Services.ConfigureRepositories();
+builder.Services.ConfigureRabbitMQ(builder.Configuration);
 
 builder.Services.AddSwaggerGen(s =>
 {
