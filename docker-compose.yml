@@ -8,7 +8,8 @@ services:
       dockerfile: ESourcing.Products/Dockerfile
   mongo:
     image: mongo
-
+  rabbitmq:
+    image: rabbitmq:3-management
   esourcing.sourcing:
     image: ${DOCKER_REGISTRY-}esourcingsourcing
     build:
