@@ -2,6 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Infrastructure.Data;
+using Ordering.Infrastructure.Repositories;
+using Ordering.Infrastructure.Repositories.Base;
+using Ordering.Domain.Repositories;
+using Ordering.Domain.Repositories.Base;
 
 namespace Ordering.Infrastructure
 {
@@ -19,8 +23,8 @@ namespace Ordering.Infrastructure
             //            b => b.MigrationsAssembly(typeof(OrderContext).Assembly.FullName)), ServiceLifetime.Singleton);
 
             //Add Repositories
-            //services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-            //services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IOrderRepository, OrderRepository>();
 
             return services;
         }

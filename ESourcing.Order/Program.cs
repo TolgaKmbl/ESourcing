@@ -1,6 +1,7 @@
 using ESourcing.Order.Extensions;
 using Ordering.Infrastructure;
 using Ordering.Application;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Order API", Version = "v1" });
+});
+
 
 var app = builder.Build();
 
@@ -19,5 +25,11 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MigrateDatabase();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Order API V1");
+});
 
 app.Run();
