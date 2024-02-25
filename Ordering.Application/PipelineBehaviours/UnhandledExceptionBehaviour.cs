@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace Ordering.Application.PipelineBehaviours
 {
     public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : MediatR.IRequest<TResponse>
     {
         private readonly ILogger<TRequest> _logger;
 

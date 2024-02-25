@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureRabbitMQ(builder.Configuration);
 builder.Services.AddSwaggerGen(c =>
 {

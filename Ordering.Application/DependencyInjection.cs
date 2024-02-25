@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Ordering.Application.Mapper;
 using Ordering.Application.PipelineBehaviours;
 using System;
@@ -18,7 +19,7 @@ namespace Ordering.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), ServiceLifetime.Transient);
             /**
              * If using MediatR version < 12, install DependencyInjection package with it and use the code below
              * services.AddMediatR(Assembly.GetExecutingAssembly());
