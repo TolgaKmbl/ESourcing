@@ -1,4 +1,5 @@
 using ESourcing.Products.Configuration;
+using ESourcing.Sourcing.Hubs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -12,6 +13,7 @@ builder.Services.ConfigureContext();
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureRabbitMQ(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddSignalR();
 
 builder.Services.AddSwaggerGen(s =>
 {
@@ -37,5 +39,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<AuctionHub>("/auctionHub");
 
 app.Run();
